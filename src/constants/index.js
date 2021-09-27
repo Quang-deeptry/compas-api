@@ -1,0 +1,65 @@
+module.exports = {
+  STATUS: {
+    PENDING: 'PENDING',
+    SUCCESS: 'SUCCESS',
+    CANCEL: 'CANCEL',
+    CLIENT_REMOVE: 'CLIENT_REMOVE',
+    NO_STATUS: 'NO_STATUS',
+    APPROVE: 'APPROVE',
+    REJECT: 'REJECT',
+    ACCEPT: 'ACCEPT',
+    DENY: 'DENY',
+  },
+
+  MEDIA_STATUS: {
+    PRODUCT_CODE_IMAGES: 'PRODUCT_CODE_IMAGES',
+    INVOICE_IMAGES: 'INVOICE_IMAGES',
+  },
+
+  PRODUCT_STATUS: {
+    INCOMING: 'En commande',
+    FULL: 'Plein',
+    OPEN: 'Ouvert',
+    EMPTY: 'Vide',
+  },
+
+  PRODUCT_PACKAGE_STATUS: {
+    RESERVOIR: 'RESERVOIR',
+    RECEPTION: 'RECEPTION',
+  },
+
+  GENDER: {
+    FEMALE: 'FEMALE',
+    MALE: 'MALE',
+    CUSTOM: 'CUSTOM',
+  },
+
+  EMAIL_STATUS: {
+    RECEIVE: 'RECEIVE',
+    REPORT: 'REPORT',
+  },
+
+  ACTION: {
+    CREATE: 'CREATE',
+    UPDATE: 'UPDATE',
+    DELETE: 'DELETE',
+  },
+
+  LIST_ROLE: {
+    OWNER: 'OWNER',
+    MANAGER: 'MANAGER',
+    EMPLOYEER: 'EMPLOYEER',
+  },
+
+  NOTIFICATION_TYPE: {
+    NEW_ORDER: 'NEW_ORDER',
+  },
+
+  HISTORY_REF_MODEL: {
+    PRODUCT_PACKAGE: 'product_packages',
+    PRODUCT: 'products',
+    PRODUCT_CODE: 'product_codes',
+  },
+
+  ITEM_PER_PAGE: 20,
+};

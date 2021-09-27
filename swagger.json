@@ -1,0 +1,205 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "COMPAS",
+    "description": "",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/api/v1.0",
+  "tags": [
+    {
+      "name": "Auth",
+      "description": ""
+    },
+    {
+      "name": "restaurant",
+      "description": ""
+    }
+  ],
+  "schemes": ["http"],
+
+  "securityDefinitions": {
+    "authentication": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "bearerFormat": "JWT"    
+    }
+  },
+
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Logs user into the system",
+        "description": "",
+        "operationId": "loginUser",
+        "produces": ["application/xml", "application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Pet object that needs to be added to the store",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Authentication"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User details, a JWT access token and a refresh token cookie",
+            "headers": {
+              "Set-Cookie": {
+                "description": "`refreshToken`",
+                "schema": {
+                  "type": "string",
+                  "example": "refreshToken=51872eca5efedcf424db4cf5afd16a9d00ad25b743a034c9c221afc85d18dcd5e4ad6e3f08607550; Path=/; Expires=Tue, 16 Jun 2020 09:14:17 GMT; HttpOnly"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "5eb12e197e06a76ccdefc121"
+                    },
+                    "jwtToken": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZWIxMmUxOTdlMDZhNzZjY2RlZmMxMjEiLCJpZCI6IjVlYjEyZTE5N2UwNmE3NmNjZGVmYzEyMSIsImlhdCI6MTU4ODc1ODE1N30.xR9H0STbFOpSkuGA9jHNZOJ6eS7umHHqKRhI807YT1Y"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "profile/restaurant": {
+      "get": {
+        "tags": ["restaurant"],
+        "summary": "Find restaurant by ID",
+        "description": "Returns a single restaurant",
+        "produces": ["application/xml", "application/json"]
+      },
+      "security": {
+        "authentication": []
+      },
+      "responses": {
+        "200": {
+          "description": "successful operation",
+          "schema": {
+            "$ref": "#/definitions/Restaurants"
+          }
+        },
+        "400": {
+          "description": "Invalid ID supplied"
+        },
+        "404": {
+          "description": "Restaurants not found"
+        }
+      }
+    },
+    "/profile/restaurant/{restaurantId}": {
+      "get": {
+        "tags": ["restaurant"],
+        "summary": "Find restaurant by ID",
+        "description": "Returns a single restaurant",
+        "operationId": "getRestaurantById",
+        "produces": ["application/xml", "application/json"],
+        "parameters": [
+          {
+            "name": "restaurantId",
+            "in": "path",
+            "description": "ID of restaurant to return",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Restaurants"
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Restaurants not found"
+          }
+        }
+      }
+    }
+  },
+
+  "definitions": {
+    "Restaurants": {
+      "type": "object",
+      "required": ["restaurantName", "address"],
+      "properties": {
+        "restaurantName": {
+          "type": "string",
+          "uniqueItems": true,
+          "required": true
+        },
+        "address": {
+          "type": "object",
+          "xml": {
+            "name": "address",
+            "wrapped": true
+          },
+          "street": {
+            "type": "string",
+            "required": true
+          },
+          "number": {
+            "type": "string",
+            "required": true
+          },
+          "city": {
+            "type": "string",
+            "required": true
+          },
+          "zipCode": {
+            "type": "string",
+            "required": true
+          }
+        }
+      },
+      "xml": {
+        "name": "Restaurants"
+      }
+    },
+    "Authentication": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "Authentication"
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}
